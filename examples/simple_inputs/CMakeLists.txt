@@ -14,5 +14,5 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(seika)
 
-add_executable(${PROJECT_NAME}_app src/main.c)
-target_link_libraries(${PROJECT_NAME}_app seika)
+add_executable(${PROJECT_NAME} src/main.c)
+target_link_libraries(${PROJECT_NAME} seika)
