@@ -5,14 +5,12 @@ set(CMAKE_C_STANDARD 11)
 
 # Include seika framework as a dependency
 include(FetchContent)
-
 FetchContent_Declare(
-        seika
+        seika_content
         GIT_REPOSITORY https://github.com/Chukobyte/seika.git
-        GIT_TAG main
+        GIT_TAG main # TODO: Add version tag once finished updating seika
 )
-
-FetchContent_MakeAvailable(seika)
+FetchContent_MakeAvailable(seika_content)
 
 add_executable(${PROJECT_NAME} src/main.c)
 target_link_libraries(${PROJECT_NAME} seika)

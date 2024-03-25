@@ -1,38 +1,33 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <seika/seika.h>
 #include <seika/input/input.h>
 
 int main(int argv, char** args) {
-    sf_initialize_simple("Simple Window", 800, 600);
+    ska_init_all("Simple Window", 800, 600, 800, 600);
 
-    // Add input actions
-    se_input_add_action_value("exit", "esc", 0);
-    se_input_add_action_value("print", "space", 0);
+    while (ska_is_running()) {
+        ska_update();
 
-    while (sf_is_running()) {
-        sf_process_inputs();
-
-        if (se_input_is_action_just_pressed("exit")) {
+        if (ska_input_is_key_just_pressed(SkaInputKey_KEYBOARD_ESCAPE, 0)) {
             break;
         }
 
-        if (se_input_is_action_just_pressed("print")) {
+        if (ska_input_is_key_just_pressed(SkaInputKey_KEYBOARD_SPACE, 0)) {
             printf("space just pressed\n");
         }
-        if (se_input_is_action_pressed("print")) {
+        if (ska_input_is_key_pressed(SkaInputKey_KEYBOARD_SPACE, 0)) {
             printf("space pressed\n");
         }
-        if (se_input_is_action_just_released("print")) {
+        if (ska_input_is_key_just_released(SkaInputKey_KEYBOARD_SPACE, 0)) {
             printf("space just released\n");
         }
 
-        sf_render();
-
-        se_input_clean_up_flags();
+        ska_window_render();
     }
 
-    sf_shutdown();
+    ska_shutdown_all();
 
     return EXIT_SUCCESS;
 }

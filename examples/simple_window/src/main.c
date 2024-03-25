@@ -3,14 +3,14 @@
 #include <seika/seika.h>
 
 int main(int argv, char** args) {
-    sf_initialize_simple("Simple Window", 800, 600);
+    ska_init_all("Simple Window", 800, 600, 800, 600);
 
-    while (sf_is_running()) {
-        sf_process_inputs();
-        sf_render();
+    while (ska_is_running()) {
+        ska_update();
+        ska_window_render();
     }
 
-    sf_shutdown();
+    ska_shutdown_all();
 
     return EXIT_SUCCESS;
 }
