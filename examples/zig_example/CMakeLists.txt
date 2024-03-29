@@ -17,7 +17,7 @@ if (ZIG_EXECUTABLE)
 
     add_custom_target(
             ${PROJECT_NAME} ALL
-            COMMAND zig build --search-prefix ${seika_content_SOURCE_DIR}
+            COMMAND zig build -DlibDir=${seika_content_BINARY_DIR} -DincludeDir=${seika_content_SOURCE_DIR}/seika --search-prefix ${seika_content_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             COMMENT "Building zig executable"
     )
