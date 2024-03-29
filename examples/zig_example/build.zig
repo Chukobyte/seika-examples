@@ -1,8 +1,8 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const libDir = b.option([]const u8, "libDir", "Library directory path");
-    const includeDir = b.option([]const u8, "includeDir", "Include directory path");
+    const libDirs = b.option([]const u8, "libDirs", "Library directory path");
+    const includeDirs = b.option([]const u8, "includeDirs", "Include directory path");
 
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
@@ -14,8 +14,18 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.linkLibC();
-    exe.addIncludePath(.{ .path = includeDir.? });
-    exe.addLibraryPath(.{ .path = libDir.? });
+
+    // Split the paths and add them
+    var libIt = std.mem.split(u8, libDirs.?, ";");
+    while (libIt.next()) |dir| {
+        exe.addLibraryPath(.{ .path = dir });
+    }
+
+    var includeIt = std.mem.split(u8, includeDirs.?, ";");
+    while (includeIt.next()) |dir| {
+        exe.addIncludePath(.{ .path = dir });
+    }
+
     exe.linkSystemLibrary("seika");
 
     b.installArtifact(exe);
