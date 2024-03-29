@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25.0)
-project(simple_window C)
+project(zig_example C)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -12,5 +12,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(seika_content)
 
-add_executable(${PROJECT_NAME} src/main.c)
-target_link_libraries(${PROJECT_NAME} seika)
+add_custom_target(
+        ${PROJECT_NAME} ALL
+        COMMAND zig build --search-prefix ${seika_content_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Building zig executable"
+)

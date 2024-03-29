@@ -8,7 +8,7 @@ include(FetchContent)
 FetchContent_Declare(
         seika_content
         GIT_REPOSITORY https://github.com/Chukobyte/seika.git
-        GIT_TAG main # TODO: Add version tag once finished updating seika
+        GIT_TAG v0.1.0
 )
 FetchContent_MakeAvailable(seika_content)
 
