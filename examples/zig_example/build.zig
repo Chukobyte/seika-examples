@@ -16,17 +16,18 @@ pub fn build(b: *std.Build) void {
     exe.linkLibC();
 
     // Split the paths and add them
-    var libIt = std.mem.split(u8, libDirs.?, ";");
+    var libIt = std.mem.split(u8, libDirs.?, "+");
     while (libIt.next()) |dir| {
         exe.addLibraryPath(.{ .path = dir });
     }
 
-    var includeIt = std.mem.split(u8, includeDirs.?, ";");
+    var includeIt = std.mem.split(u8, includeDirs.?, "+");
     while (includeIt.next()) |dir| {
         exe.addIncludePath(.{ .path = dir });
     }
 
     exe.linkSystemLibrary("seika");
+    exe.linkSystemLibrary("SDL3");
 
     b.installArtifact(exe);
 }
