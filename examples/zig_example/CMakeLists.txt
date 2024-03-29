@@ -11,7 +11,7 @@ if (ZIG_EXECUTABLE)
     FetchContent_Declare(
             seika_content
             GIT_REPOSITORY https://github.com/Chukobyte/seika.git
-            GIT_TAG v0.1.0
+            GIT_TAG dev
     )
     FetchContent_MakeAvailable(seika_content)
 

@@ -27,7 +27,9 @@ pub fn build(b: *std.Build) void {
     }
 
     exe.linkSystemLibrary("seika");
-    exe.linkSystemLibrary("SDL3");
+    exe.linkSystemLibrary("SDL3::SDL3-static");
+    exe.linkSystemLibrary("glad");
+    exe.linkSystemLibrary("stb_image");
 
     b.installArtifact(exe);
 }
