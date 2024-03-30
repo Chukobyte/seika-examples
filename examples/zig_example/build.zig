@@ -5,6 +5,7 @@ pub fn build(b: *std.Build) void {
     const includeDirs = b.option([]const u8, "includeDirs", "Include directory path");
 
     const target = b.standardTargetOptions(.{});
+
     // const optimize = b.standardOptimizeOption(.{});
     const optimize = std.builtin.Mode.ReleaseSafe;
     const exe = b.addExecutable(.{
@@ -36,8 +37,8 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("cfgmgr32");
     exe.linkSystemLibrary("oleaut32");
     exe.linkSystemLibrary("ws2_32");
-    exe.linkSystemLibrary("SDL3");
     exe.linkSystemLibrary("seika");
+    exe.linkSystemLibrary("SDL3");
     exe.linkSystemLibrary("glad");
     exe.linkSystemLibrary("stb_image");
     exe.linkSystemLibrary("freetype");

@@ -19,7 +19,7 @@ if (ZIG_EXECUTABLE)
 
     add_custom_target(
             ${PROJECT_NAME} ALL
-            COMMAND zig build -DlibDirs=${SEIKA_LIBS_DIRS} -DincludeDirs=${seika_content_SOURCE_DIR} --search-prefix ${seika_content_SOURCE_DIR}
+            COMMAND zig build -DlibDirs=${SEIKA_LIBS_DIRS} -DincludeDirs=${seika_content_SOURCE_DIR} -Dtarget=x86-windows-gnu --search-prefix ${seika_content_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             COMMENT "Building zig executable"
     )
