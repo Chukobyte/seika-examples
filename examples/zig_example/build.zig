@@ -35,16 +35,13 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("winmm");
     exe.linkSystemLibrary("cfgmgr32");
     exe.linkSystemLibrary("oleaut32");
-    // exe.linkSystemLibrary("pthread");
+    exe.linkSystemLibrary("ws2_32");
+    exe.linkSystemLibrary("SDL3");
     exe.linkSystemLibrary("seika");
-    exe.addObjectFile(.{ .path = "C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/sdl_content-build/libSDL3.a" });
     exe.linkSystemLibrary("glad");
     exe.linkSystemLibrary("stb_image");
     exe.linkSystemLibrary("freetype");
     exe.linkSystemLibrary("zip");
-    exe.linkSystemLibrary("cglm");
-    // exe.linkSystemLibrary("winpthread");
-    // exe.linkSystemLibrary("SDL3::SDL3-static");
 
     exe.linkLibC();
 
