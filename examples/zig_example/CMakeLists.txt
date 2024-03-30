@@ -15,7 +15,7 @@ if (ZIG_EXECUTABLE)
     )
     FetchContent_MakeAvailable(seika_content)
 
-    set(SEIKA_LIBS_DIRS "${seika_content_BINARY_DIR}+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-debug-mingw/_deps/sdl_content-build")
+    set(SEIKA_LIBS_DIRS "${seika_content_BINARY_DIR}+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/sdl_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/freetype_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/kuba_zip_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/cglm_content-build")
 
     add_custom_target(
             ${PROJECT_NAME} ALL
@@ -24,5 +24,5 @@ if (ZIG_EXECUTABLE)
             COMMENT "Building zig executable"
     )
 else ()
-    message(STATUS "Zig is either not installed or added to path, skipping building zig_example target.")
+    message(STATUS "Zig is either not installed or not added to path, skipping building zig_example target.")
 endif ()
