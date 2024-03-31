@@ -56,7 +56,10 @@ pub fn build(b: *std.Build) void {
         "pthreadGC2"
     );
 
+    const localMingwLibDir = std.fmt.allocPrint(allocator, "{s}{s}", .{thirdpartyDir.?, "x86_64-w64-mingw-13.1.0"}) catch "Format failed";
+    exe.addLibraryPath(.{ .path = localMingwLibDir });
     exe.linkSystemLibrary("gcc_eh");
+
     exe.linkSystemLibrary("gdi32");
     exe.linkSystemLibrary("user32");
     exe.linkSystemLibrary("shell32");

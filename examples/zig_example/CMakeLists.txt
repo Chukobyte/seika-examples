@@ -28,7 +28,7 @@ if (ZIG_EXECUTABLE)
     set(SEIKA_FETCH_CONTENT_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/")
     set(SEIKA_THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/")
 
-    set(SEIKA_LIBS_DIRS "C:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0")
+    set(SEIKA_LIBS_DIRS "")
     set(SEIKA_INCLUDE_DIRS "")
 
     add_custom_target(
