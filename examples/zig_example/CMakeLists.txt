@@ -17,7 +17,7 @@ if (ZIG_EXECUTABLE)
     FetchContent_Declare(
             seika_content
             GIT_REPOSITORY https://github.com/Chukobyte/seika.git
-            GIT_TAG dev
+            GIT_TAG v0.1.1
     )
     FetchContent_MakeAvailable(seika_content)
     set_target_properties(seika PROPERTIES
@@ -25,15 +25,19 @@ if (ZIG_EXECUTABLE)
             C_STANDARD_REQUIRED YES
     )
 
-    set(SEIKA_LIBS_DIRS "${seika_content_BINARY_DIR}+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/sdl_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/freetype_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/kuba_zip_content-build+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/cglm_content-build+C:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/temp/pthreads-win32/lib/x64")
-    set(SEIKA_INCLUDE_DIRS "${seika_content_SOURCE_DIR}+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/cmake-build-release-mingw/_deps/sdl_content-src/include+C:/Users/Chukobyte/ProjectWorkspace/c_lang/seika-examples/temp/pthreads-win32/include")
+    set(SEIKA_FETCH_CONTENT_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/")
+    set(SEIKA_THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/")
+
+    set(SEIKA_LIBS_DIRS "C:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0")
+    set(SEIKA_INCLUDE_DIRS "")
 
     add_custom_target(
             ${PROJECT_NAME} ALL
-            COMMAND zig build -DlibDirs=${SEIKA_LIBS_DIRS} -DincludeDirs=${SEIKA_INCLUDE_DIRS} -Dtarget=x86_64-windows-gnu --search-prefix ${seika_content_SOURCE_DIR}
+            COMMAND zig build -DlibDirs=${SEIKA_LIBS_DIRS} -DincludeDirs=${SEIKA_INCLUDE_DIRS} -DfetchContentDir=${SEIKA_FETCH_CONTENT_ROOT_DIR} -DthirdpartyDir=${SEIKA_THIRD_PARTY_DIR} -Dtarget=x86_64-windows-gnu --search-prefix ${seika_content_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             COMMENT "Building zig executable"
     )
+    add_dependencies(${PROJECT_NAME} simple_window)
 else ()
     message(STATUS "Zig is either not installed or not added to path, skipping building zig_example target.")
 endif ()
