@@ -27,6 +27,9 @@ pub fn build(b: *std.Build) void {
     }
 
 
+    exe.linkLibC();
+    exe.linkSystemLibrary("pthreadGC2");
+    exe.linkSystemLibrary("gcc_eh");
     exe.linkSystemLibrary("gdi32");
     exe.linkSystemLibrary("user32");
     exe.linkSystemLibrary("shell32");
@@ -37,14 +40,14 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("cfgmgr32");
     exe.linkSystemLibrary("oleaut32");
     exe.linkSystemLibrary("ws2_32");
-    exe.linkSystemLibrary("seika");
+    exe.linkSystemLibrary("mingw32");
+    exe.linkSystemLibrary("freetype");
     exe.linkSystemLibrary("SDL3");
     exe.linkSystemLibrary("glad");
-    exe.linkSystemLibrary("stb_image");
-    exe.linkSystemLibrary("freetype");
     exe.linkSystemLibrary("zip");
-
-    exe.linkLibC();
+    exe.linkSystemLibrary("stb_image");
+    exe.linkSystemLibrary("seika");
+    // exe.linkSystemLibrary("cglm");
 
     b.installArtifact(exe);
 }
