@@ -19,8 +19,7 @@ pub fn build(b: *std.Build) void {
 
     const target = b.standardTargetOptions(.{});
 
-    // const optimize = b.standardOptimizeOption(.{});
-    const optimize = std.builtin.Mode.ReleaseSafe;
+    const optimize = b.standardOptimizeOption(.{});
     const exe = b.addExecutable(.{
         .name = "zig_example",
         .root_source_file = .{ .path = "src/main.zig" },
