@@ -77,7 +77,7 @@ pub fn build(b: *std.Build) void {
         exe,
         freetypeIncludeDir,
         freetypeLibDir,
-        if (optimize != std.builtin.Mode.Debug) "freetyped" else "freetype"
+        if (optimize == std.builtin.Mode.Debug) "freetyped" else "freetype"
     );
 
     // SDL3
