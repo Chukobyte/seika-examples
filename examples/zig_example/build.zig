@@ -144,6 +144,16 @@ pub fn build(b: *std.Build) void {
         "stb_image"
     );
 
+    // cglm
+    const cglmIncludeDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "cglm_content-src/include"}) catch "Format failed";
+    const cglmLibDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "cglm_content-build"}) catch "Format failed";
+    addBuildLibrary(
+        exe,
+        cglmIncludeDir,
+        cglmLibDir,
+        "cglm.dll"
+    );
+
     // seika
     const seikaIncludeDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "seika_content-src"}) catch "Format failed";
     const seikaLibDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "seika_content-build"}) catch "Format failed";
