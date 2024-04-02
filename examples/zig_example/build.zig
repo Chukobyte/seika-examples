@@ -18,7 +18,6 @@ pub fn build(b: *std.Build) void {
     const allocator = std.heap.page_allocator;
 
     const target = b.standardTargetOptions(.{});
-
     const optimize = b.standardOptimizeOption(.{});
     const exe = b.addExecutable(.{
         .name = "zig_example",
@@ -26,6 +25,9 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
+    const cwd = std.fs.cwd().realpathAlloc(allocator, ".") catch unreachable;
+    const executableDir = std.fmt.allocPrint(allocator, "{s}/zig-out/bin/", .{cwd}) catch "Format failed";
 
     // Split the paths and add them
     if (libDirs != null and libDirs.?.len > 0) {
@@ -73,12 +75,16 @@ pub fn build(b: *std.Build) void {
     // freetype
     const freetypeIncludeDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "freetype_content-src/include"}) catch "Format failed";
     const freetypeLibDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "freetype_content-build"}) catch "Format failed";
+    const freetypeDLLName = if (optimize == std.builtin.Mode.Debug) "freetyped.dll" else "freetype.dll";
     addBuildLibrary(
         exe,
         freetypeIncludeDir,
         freetypeLibDir,
-        if (optimize == std.builtin.Mode.Debug) "freetyped" else "freetype"
+        freetypeDLLName
     );
+    const freetypeSourcePath = std.fmt.allocPrint(allocator, "{s}/lib{s}", .{freetypeLibDir, freetypeDLLName}) catch "Format failed";
+    const freetypeDLLDestPath = std.fmt.allocPrint(allocator, "{s}lib{s}", .{executableDir, freetypeDLLName}) catch "Format failed";
+    std.fs.copyFileAbsolute(freetypeSourcePath, freetypeDLLDestPath, .{}) catch unreachable;
 
     // SDL3
     const sdlIncludeDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "sdl_content-src/include"}) catch "Format failed";
@@ -89,6 +95,9 @@ pub fn build(b: *std.Build) void {
         sdlLibDir,
         "SDL3"
     );
+    const sdlDLLSourcePath = std.fmt.allocPrint(allocator, "{s}/{s}", .{sdlLibDir, "SDL3.dll"}) catch "Format failed";
+    const sdlDLLDestPath = std.fmt.allocPrint(allocator, "{s}{s}", .{executableDir, "SDL3.dll"}) catch "Format failed";
+    std.fs.copyFileAbsolute(sdlDLLSourcePath, sdlDLLDestPath, .{}) catch unreachable;
 
     // glad
     const gladIncludeDir = std.fmt.allocPrint(allocator, "{s}{s}", .{fetchContentDir.?, "seika_content-build"}) catch "Format failed";
