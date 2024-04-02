@@ -29,3 +29,6 @@ CTestTestfile.cmake
 _deps
 
 cmake-build-*
+
+zig-cache
+zig-out
