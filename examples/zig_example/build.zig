@@ -59,6 +59,21 @@ pub fn build(b: *std.Build) void {
 
     const localMingwLibDir = std.fmt.allocPrint(allocator, "{s}{s}", .{thirdpartyDir.?, "x86_64-w64-mingw-13.1.0"}) catch "Format failed";
     exe.addLibraryPath(.{ .path = localMingwLibDir });
+
+    const localMingwDllsDir = std.fmt.allocPrint(allocator, "{s}/{s}", .{localMingwLibDir, "dlls"}) catch "Format failed";
+    var iter_dir = std.fs.openDirAbsolute(localMingwDllsDir, .{ .iterate = true }) catch unreachable;
+    defer iter_dir.close();
+    var iter = iter_dir.iterate();
+    while (true) {
+        const entry = iter.next() catch {
+            continue;
+        };
+        if (entry == null) break;
+        const currentDllSourcePath = std.fmt.allocPrint(allocator, "{s}/{s}", .{localMingwDllsDir, entry.?.name}) catch "Format failed";
+        const currentDllDestPath = std.fmt.allocPrint(allocator, "{s}{s}", .{executableDir, entry.?.name}) catch "Format failed";
+        std.fs.copyFileAbsolute(currentDllSourcePath, currentDllDestPath, .{}) catch unreachable;
+    }
+
     exe.linkSystemLibrary("gcc_eh");
 
     exe.linkSystemLibrary("gdi32");
