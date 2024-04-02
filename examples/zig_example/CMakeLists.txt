@@ -6,12 +6,6 @@ set(CMAKE_C_STANDARD 11)
 find_program(ZIG_EXECUTABLE NAMES zig)
 
 if (ZIG_EXECUTABLE)
-    set(THREADS_PREFER_PTHREAD_FLAG ON)
-    find_package(Threads REQUIRED)
-    message(STATUS "CMAKE_THREAD_LIBS_INIT: ${CMAKE_THREAD_LIBS_INIT}")
-    message(STATUS "CMAKE_USE_WIN32_THREADS_INIT: ${CMAKE_USE_WIN32_THREADS_INIT}")
-    message(STATUS "Threads_FOUND: ${Threads_FOUND}")
-
     set(SEIKA_FETCH_CONTENT_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/")
     set(SEIKA_THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/")
 
@@ -24,11 +18,18 @@ if (ZIG_EXECUTABLE)
         set(ZIG_OPTIMIZE_FLAG "Debug")
     endif()
 
-    add_custom_target(
-            ${PROJECT_NAME} ALL
+    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/zig-out/bin/${PROJECT_NAME}.exe)
+
+    add_custom_command(
+            OUTPUT ${EXECUTABLE_OUTPUT_PATH}
             COMMAND zig build -Dtarget=x86_64-windows-gnu -Doptimize=${ZIG_OPTIMIZE_FLAG} -DlibDirs=${SEIKA_LIBS_DIRS} -DincludeDirs=${SEIKA_INCLUDE_DIRS} -DfetchContentDir=${SEIKA_FETCH_CONTENT_ROOT_DIR} -DthirdpartyDir=${SEIKA_THIRD_PARTY_DIR} --search-prefix ${seika_content_SOURCE_DIR}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             COMMENT "Building zig executable"
+    )
+
+    add_custom_target(
+            ${PROJECT_NAME} ALL
+            DEPENDS ${EXECUTABLE_OUTPUT_PATH}
     )
     add_dependencies(${PROJECT_NAME} simple_window)
 else ()
