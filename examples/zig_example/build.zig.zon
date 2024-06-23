@@ -1,0 +1,16 @@
+.{
+    .name = "zig_example",
+    .version = "0.0.1",
+    .minimum_zig_version = "0.13.0", // Version used to build project and deps
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+    .dependencies = .{
+        .zeika = .{
+            .url = "https://github.com/Chukobyte/zeika/archive/refs/tags/v0.0.18.tar.gz",
+            .hash = "12200519f7879f9f5ada979bef739f0d88cfdd45b26ae2bd155e089514345d934e73",
+        },
+    },
+}
